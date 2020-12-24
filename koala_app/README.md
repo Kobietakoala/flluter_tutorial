@@ -1,4 +1,4 @@
-# koala_app
+# ninja_the_koala
 
 A new Flutter application.
 
