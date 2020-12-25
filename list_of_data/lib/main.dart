@@ -33,7 +33,22 @@ class _QuoteListState extends State<QuoteList> {
         backgroundColor: Colors.grey[800],
         ),
       body: Column(
-        children: quotes.map((qute) => QuoteCard(quote: qute,)).toList(),
+        children: quotes.map((qute) => QuoteCard(
+          quote: qute,
+          delete: () {
+            setState(() {
+              quotes.remove(qute);
+            });
+          }
+        )).toList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          setState(() {
+            quotes.add(Quote(text: "Nowy!", author:"Only Me"));
+          });
+        },
       ),
       );
   }
