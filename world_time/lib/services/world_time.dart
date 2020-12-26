@@ -16,7 +16,6 @@ class WorldTime{
     try {
       Response response = await get(
           'https://worldtimeapi.org/api/timezone/$url');
-      print(response);
       Map data = jsonDecode(response.body);
 
       String datetime = data['datetime'];
@@ -27,12 +26,7 @@ class WorldTime{
       isDayTime = now.hour > 6 && now.hour < 20 ? true : false;
       time = DateFormat.jm().format(now);
     }catch (e){
-      print(e);
       time = "Could not get time data";
-
-      DateTime now = DateTime.now();
-      isDayTime = now.hour > 6 && now.hour < 20 ? true : false;
-      time = DateFormat.jm().format(now);
     }
 
   }
