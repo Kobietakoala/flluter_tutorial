@@ -1,4 +1,5 @@
 import 'package:brew_crew/services/auth.dart';
+import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:brew_crew/shared/constants.dart';
 
@@ -15,6 +16,8 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+
+  bool loading = false;
 
   // text field state
   String email = '';
@@ -40,7 +43,7 @@ class _RegisterState extends State<Register> {
           )
         ],
       ),
-      body: Container(
+      body: loading ? Loading() : Container(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
@@ -79,12 +82,12 @@ class _RegisterState extends State<Register> {
                   ),
                   onPressed: () async {
                     if(_formKey.currentState.validate()){
-                      print(email);
-                      print(password);
+                      setState(() => loading = true);
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                       if(result == null){
                         setState(() {
                           error = 'Somthing is wrong.';
+                          loading = false;
                         });
                       }
                     }
