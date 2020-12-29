@@ -14,10 +14,12 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class _RegisterState extends State<Register> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 SizedBox(height: 20.0,),
@@ -49,12 +52,18 @@ class _RegisterState extends State<Register> {
                   onChanged: (value) {
                     setState(() => email = value);
                   },
+                  validator: (val) {
+                    return val.isEmpty ? 'Enter an email' : null;
+                  },
                 ),
                 SizedBox(height: 20.0,),
                 TextFormField(
                   obscureText: true,
                   onChanged: (value) {
                     setState(() => password = value);
+                  },
+                  validator: (val) {
+                    return val.length < 6 ? 'Enter an password 6+ chars long' : null;
                   },
                 ),
                 SizedBox(height: 20.0,),
@@ -67,10 +76,28 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   onPressed: () async {
-                    print(email);
-                    print(password);
+                    if(_formKey.currentState.validate()){
+                      print(email);
+                      print(password);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      if(result == null){
+                        setState(() {
+                          error = 'Somthing is wrong.';
+                        });
+                      }
+                    }
                   },
-                )
+                ),
+                SizedBox(height: 2.0,),
+                Text(
+                  error,
+                  style: TextStyle(
+                    color: Colors.red[900],
+                    fontSize: 14.0,
+
+                  ),
+
+                ),
               ],
             ),
           ),
