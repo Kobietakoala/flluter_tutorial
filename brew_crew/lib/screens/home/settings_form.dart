@@ -77,6 +77,16 @@ class _SettingsFormState extends State<SettingsForm> {
                     ),
                   ),
                   onPressed: () async{
+                    if(_formKey.currentState.validate()){
+                      dynamic response = await DatabaseService(uid: user.uid).updateUserData(
+                          _currentSugar ?? userData.sugars,
+                          _currentName ?? userData.name,
+                          _currentStrenght ?? userData.strength
+                      );
+                      Navigator.pop(context);
+                    }else{
+
+                    }
 
                   },
                 )
@@ -87,8 +97,6 @@ class _SettingsFormState extends State<SettingsForm> {
         }else{
           return Loading();
         }
-
-
       }
     );
   }
