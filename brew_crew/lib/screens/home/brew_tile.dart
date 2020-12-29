@@ -20,7 +20,7 @@ class BrewTile extends StatelessWidget {
               backgroundColor: Colors.brown[brew.strenght],
             ),
             title: Text(brew.name),
-            subtitle: Text("Takes ${brew.sugars} sugars"),
+            subtitle: Text("Takes ${brew.sugars} sugar(s)"),
           ),
         ),
     );
