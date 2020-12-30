@@ -1,4 +1,4 @@
-import 'package:brew_crew/models/user.dart';
+import 'package:brew_crew/models/my_user.dart';
 import 'package:brew_crew/services/database.dart';
 import 'package:brew_crew/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +22,14 @@ class _SettingsFormState extends State<SettingsForm> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<MyUser>(context);
 
-    return StreamBuilder<UserData>(
+    return StreamBuilder<MyUserData>(
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
 
         if(snapshot.hasData){
-          UserData userData = snapshot.data;
+          MyUserData userData = snapshot.data;
           return Form(
             key: _formKey,
             child: Column(
